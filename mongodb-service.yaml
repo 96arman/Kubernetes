@@ -1,0 +1,11 @@
+apiVersion: v1 # Versionen av Kubernetes API
+kind: Service # Typen av Kubernetes-objekt; en tjänst (Service)
+metadata:
+  name: mongodb-service # Namnet på tjänsten
+spec:
+  selector:
+    app: mongodb # Väljer Pods baserat på etikett "app" med värdet "mongodb"
+  ports:
+  - protocol: TCP # Nätverksprotokollet för denna port
+    port: 27017 # Porten som tjänsten är exponerad på
+    targetPort: 27017 # Porten på Pods dit trafiken ska riktas

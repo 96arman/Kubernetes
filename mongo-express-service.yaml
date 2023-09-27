@@ -1,0 +1,12 @@
+apiVersion: v1 # Versionen av Kubernetes API
+kind: Service # Typen av Kubernetes-objekt; en tjänst (Service)
+metadata:
+  name: mongo-express-service # Namnet på tjänsten
+spec:
+  selector:
+    app: mongo-express # Väljer Pods baserat på etikett "app" med värdet "mongo-express"
+  ports:
+  - protocol: TCP # Nätverksprotokollet för denna port
+    port: 8081 # Porten som tjänsten är exponerad på
+    targetPort: 8081 # Porten på Pods dit trafiken ska riktas
+  type: NodePort # Anger typen av tjänst; exponerar tjänsten på varje nods IP-adress

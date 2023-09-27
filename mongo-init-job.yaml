@@ -1,0 +1,17 @@
+apiVersion: batch/v1 # Versionen av Kubernetes API för Jobs
+kind: Job # Typen av Kubernetes-objekt; en Job
+metadata:
+  name: mongo-init-job # Namnet på Job
+spec:
+  template:
+    spec:
+      containers:
+      - name: mongo-init-container # Namnet på containern
+        image: armkam96/my-mongo-init:latest # Docker-bilden att använda
+        env:
+        - name: MONGO_HOST
+          value: mongodb-service # Värde för MONGO_HOST
+        - name: MONGO_PORT
+          value: "27017" # Värde för MONGO_PORT
+        # Om MongoDB kräver autentisering, lägg till miljövariablerna här.
+      restartPolicy: OnFailure # Åtgärdsplan vid omstart av Job

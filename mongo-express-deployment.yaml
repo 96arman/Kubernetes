@@ -1,0 +1,22 @@
+apiVersion: apps/v1 # Versionen av Kubernetes API
+kind: Deployment # Typen av Kubernetes-objekt; en Deployment
+metadata:
+  name: mongo-express # Namnet på Deployment
+spec:
+  replicas: 1 # Antal önskade pod-instanser
+  selector:
+    matchLabels:
+      app: mongo-express # Urval av Pods baserat på etiketter
+  template:
+    metadata:
+      labels:
+        app: mongo-express # Etikett för podurval
+    spec:
+      containers:
+      - name: mongo-express # Namnet på containern; måste vara unikt inom poden
+        image: mongo-express:latest # Den containerbild att använda
+        ports:
+        - containerPort: 8081 # Porten som containern lyssnar på
+        env:
+        - name: ME_CONFIG_MONGODB_SERVER
+          value: "mongodb-service" # Miljövariabel för att ange MongoDB-servern

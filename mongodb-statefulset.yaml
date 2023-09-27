@@ -1,0 +1,32 @@
+apiVersion: apps/v1 # Versionen av Kubernetes API
+kind: StatefulSet # Typen av Kubernetes-objekt; en StatefulSet
+metadata:
+  name: mongodb # Namnet på StatefulSet
+spec:
+  selector:
+    matchLabels:
+      app: mongodb # Urval av Pods baserat på etiketter
+  replicas: 1 # Antal önskade pod-instanser
+  serviceName: mongodb-service # Namnet på tjänsten som ska användas
+  template:
+    metadata:
+      labels:
+        app: mongodb # Etikett för podurval
+    spec:
+      containers:
+      - name: mongodb # Namnet på containern; måste vara unikt inom poden
+        image: mongo:latest # Den containerbild att använda
+        ports:
+        - containerPort: 27017 # Porten som containern lyssnar på
+        volumeMounts:
+        - name: mongodb-data # Namnet på volymen som ska monteras
+          mountPath: /data/db # Sökväg där volymen ska monteras
+  volumeClaimTemplates:
+  - metadata:
+      name: mongodb-data # Namnet på volymen
+    spec:
+      accessModes:
+      - ReadWriteOnce # Tillgångsläge för volymen
+      resources:
+        requests:
+          storage: 1Gi # Önskad lagringsstorlek för volymen

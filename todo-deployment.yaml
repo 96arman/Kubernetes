@@ -1,0 +1,22 @@
+apiVersion: apps/v1 # Versionen av Kubernetes API
+kind: Deployment # Typen av Kubernetes-objekt; en Deployment
+metadata:
+  name: todo-webapp # Namnet på Deployment
+spec:
+  replicas: 1 # Önskat antal pod-instanser
+  selector:
+    matchLabels:
+      app: todo-webapp # Urval av Pods baserat på etikett "app" med värdet "todo-webapp"
+  template:
+    metadata:
+      labels:
+        app: todo-webapp # Etikett för podurval
+    spec:
+      containers:
+      - name: todo-container # Namnet på containern
+        image: armkam96/todoapp:latest # Docker-bilden att använda
+        ports:
+        - containerPort: 80 # Porten som containern lyssnar på
+        envFrom:
+        - configMapRef:
+            name: app-config # Konfigurationsreferens till ConfigMap med inställningar
